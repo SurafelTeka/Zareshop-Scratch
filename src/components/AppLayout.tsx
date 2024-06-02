@@ -17,8 +17,10 @@ const AppLayout: React.FC = () => {
       <ComingSoon />
       
       <div className="max-w-7xl mx-auto px-4 py-6">
-        <div className="flex gap-6">
-          <Sidebar />
+        <div className="flex flex-col lg:flex-row gap-6">
+          <div className="lg:w-64 flex-shrink-0">
+            <Sidebar />
+          </div>
           
           <div className="flex-1">
             <div className="mb-4">
@@ -26,7 +28,7 @@ const AppLayout: React.FC = () => {
               <p className="text-gray-600">({products.length} products available)</p>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
               {products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

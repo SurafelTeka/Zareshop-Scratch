@@ -28,10 +28,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             src={product.image} 
             alt={product.name}
             className="w-full h-full object-cover"
+            loading="lazy"
           />
         </div>
         
-        <h3 className="font-medium text-sm mb-2 line-clamp-2">
+        <h3 className="font-medium text-sm mb-2 line-clamp-2 min-h-[2.5rem]">
           {product.name}
         </h3>
         
@@ -43,25 +44,27 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           Min. order: {product.minOrder}
         </div>
         
-        <div className="flex items-center space-x-1 mb-3">
-          {product.verified && (
-            <Badge variant="secondary" className="text-xs">
-              Verified
-            </Badge>
-          )}
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center space-x-1">
+            {product.verified && (
+              <Badge variant="secondary" className="text-xs bg-green-100 text-green-800">
+                ✓ Verified
+              </Badge>
+            )}
+          </div>
           <span className="text-xs text-gray-500">
             {product.years} {product.country}
           </span>
         </div>
         
-        <div className="text-xs text-gray-600 mb-3">
+        <div className="text-xs text-gray-600 mb-3 truncate">
           {product.supplier}
         </div>
         
         <Button 
           variant="outline" 
           size="sm" 
-          className="w-full"
+          className="w-full hover:bg-orange-50 hover:border-orange-500 hover:text-orange-600"
         >
           Contact supplier
         </Button>
