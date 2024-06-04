@@ -5,16 +5,19 @@ import ComingSoon from './ComingSoon';
 import ProductCard from './ProductCard';
 import Footer from './Footer';
 import SellerForm from './SellerForm';
+import CategorySlider from './CategorySlider';
 import { products } from '@/data/products';
 
 const AppLayout: React.FC = () => {
   const [showSellerForm, setShowSellerForm] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       <Header onBecomeSellerClick={() => setShowSellerForm(true)} />
       
       <ComingSoon />
+      
+      <CategorySlider />
       
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex flex-col lg:flex-row gap-6">
@@ -24,8 +27,8 @@ const AppLayout: React.FC = () => {
           
           <div className="flex-1">
             <div className="mb-4">
-              <h2 className="text-xl font-semibold mb-2">Featured Products</h2>
-              <p className="text-gray-600">({products.length} products available)</p>
+              <h2 className="text-xl font-semibold mb-2 dark:text-white">Featured Products</h2>
+              <p className="text-gray-600 dark:text-gray-400">({products.length} products available)</p>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">

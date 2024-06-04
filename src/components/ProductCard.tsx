@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Plus, Minus } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface Product {
   id: number;
@@ -20,6 +22,30 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const { addToCart, updateCartQuantity, cart } = useAuth();
+  
+  const cartItem = cart.find(item => item.id === product.id);
+  const quantity = cartItem?.quantity || 0;
+  
+  const priceNumber = parseFloat(product.price.replace(/[^\d.]/g, ''));
+  
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: priceNumber,
+      image: product.image
+    });
+  };
+  
+  const handleIncrement = () => {
+    updateCartQuantity(product.id, quantity + 1);
+  };
+  
+  const handleDecrement = () => {
+    updateCartQuantity(product.id, quantity - 1);
+  };
+
   return (
     <Card className="hover:shadow-lg transition-shadow">
       <CardContent className="p-4">
@@ -61,13 +87,33 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           {product.supplier}
         </div>
         
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="w-full hover:bg-orange-50 hover:border-orange-500 hover:text-orange-600"
-        >
-          Contact supplier
-        </Button>
+        {quantity === 0 ? (
+          <Button 
+            onClick={handleAddToCart}
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white"
+            size="sm"
+          >
+            Add to Cart
+          </Button>
+        ) : (
+          <div className="flex items-center justify-between">
+            <Button
+              onClick={handleDecrement}
+              size="sm"
+              className="bg-orange-500 hover:bg-orange-600 text-white p-2"
+            >
+              <Minus className="h-4 w-4" />
+            </Button>
+            <span className="font-medium text-lg px-4">{quantity}</span>
+            <Button
+              onClick={handleIncrement}
+              size="sm"
+              className="bg-orange-500 hover:bg-orange-600 text-white p-2"
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

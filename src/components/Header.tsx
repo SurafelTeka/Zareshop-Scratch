@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import { Search, ShoppingCart, User } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 import AccountForm from './AccountForm';
+import CartDropdown from './CartDropdown';
+import AccountDropdown from './AccountDropdown';
+import LocationDisplay from './LocationDisplay';
 
 interface HeaderProps {
   onBecomeSellerClick: () => void;
@@ -10,25 +15,32 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onBecomeSellerClick }) => {
   const [showAccountForm, setShowAccountForm] = useState(false);
+  const [showCartDropdown, setShowCartDropdown] = useState(false);
+  const [showAccountDropdown, setShowAccountDropdown] = useState(false);
+  const { isAuthenticated, getTotalItems } = useAuth();
 
   return (
     <>
-      <header className="bg-white shadow-sm">
+      <header className="bg-white dark:bg-gray-800 shadow-sm">
         {/* Top bar */}
-        <div className="bg-gray-50 px-4 py-2 text-sm text-gray-600">
+        <div className="bg-gray-50 dark:bg-gray-700 px-4 py-2 text-sm text-gray-600 dark:text-gray-300">
           <div className="max-w-7xl mx-auto flex justify-between items-center">
-            <span>Deliver to: ET</span>
+            <LocationDisplay />
             <div className="flex items-center space-x-4">
               <span>English-ETB</span>
-              <span>Sign in</span>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={() => setShowAccountForm(true)}
-                className="text-gray-600 hover:text-orange-500"
-              >
-                Create account
-              </Button>
+              {!isAuthenticated ? (
+                <>
+                  <span>Sign in</span>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    onClick={() => setShowAccountForm(true)}
+                    className="text-gray-600 dark:text-gray-300 hover:text-orange-500"
+                  >
+                    Create account
+                  </Button>
+                </>
+              ) : null}
             </div>
           </div>
         </div>
@@ -54,8 +66,46 @@ const Header: React.FC<HeaderProps> = ({ onBecomeSellerClick }) => {
             </div>
             
             <div className="flex items-center space-x-4">
-              <ShoppingCart className="w-6 h-6" />
-              <User className="w-6 h-6" />
+              <div className="relative">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowCartDropdown(!showCartDropdown)}
+                  className="relative p-2"
+                >
+                  <ShoppingCart className="w-6 h-6" />
+                  {getTotalItems() > 0 && (
+                    <Badge className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs min-w-[20px] h-5 flex items-center justify-center rounded-full">
+                      {getTotalItems()}
+                    </Badge>
+                  )}
+                </Button>
+                <CartDropdown 
+                  isOpen={showCartDropdown} 
+                  onClose={() => setShowCartDropdown(false)} 
+                />
+              </div>
+              
+              <div className="relative">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    if (isAuthenticated) {
+                      setShowAccountDropdown(!showAccountDropdown);
+                    } else {
+                      setShowAccountForm(true);
+                    }
+                  }}
+                  className="p-2"
+                >
+                  <User className="w-6 h-6" />
+                </Button>
+                <AccountDropdown 
+                  isOpen={showAccountDropdown} 
+                  onClose={() => setShowAccountDropdown(false)} 
+                />
+              </div>
             </div>
           </div>
           
@@ -72,7 +122,7 @@ const Header: React.FC<HeaderProps> = ({ onBecomeSellerClick }) => {
         </div>
         
         {/* Navigation */}
-        <div className="bg-gray-50 px-4 py-2">
+        <div className="bg-gray-50 dark:bg-gray-700 px-4 py-2">
           <div className="max-w-7xl mx-auto flex items-center space-x-4 md:space-x-8 overflow-x-auto">
             <span className="whitespace-nowrap">All categories</span>
             <span className="text-orange-500 whitespace-nowrap">Featured products</span>
