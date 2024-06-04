@@ -9,7 +9,16 @@ import {
   MoreHorizontal,
   Laptop,
   Car,
-  Gamepad2
+  Gamepad2,
+  Armchair,
+  Droplets,
+  Dumbbell,
+  TreePine,
+  Cog,
+  Gift,
+  Lightbulb,
+  ShoppingBag,
+  Eye
 } from 'lucide-react';
 
 interface Category {
@@ -23,9 +32,16 @@ const categories: Category[] = [
   { id: 'beauty', name: 'Beauty', icon: <Sparkles className="h-6 w-6" /> },
   { id: 'clothing', name: 'Clothing', icon: <Shirt className="h-6 w-6" /> },
   { id: 'house-rent', name: 'House Rent', icon: <Home className="h-6 w-6" /> },
-  { id: 'computers', name: 'Computers', icon: <Laptop className="h-6 w-6" /> },
-  { id: 'automotive', name: 'Automotive', icon: <Car className="h-6 w-6" /> },
-  { id: 'gaming', name: 'Gaming', icon: <Gamepad2 className="h-6 w-6" /> },
+  { id: 'furniture', name: 'Furniture', icon: <Armchair className="h-6 w-6" /> },
+  { id: 'cleaning', name: 'Cleaning', icon: <Droplets className="h-6 w-6" /> },
+  { id: 'sports', name: 'Sports & Fitness', icon: <Dumbbell className="h-6 w-6" /> },
+  { id: 'garden', name: 'Home & Garden', icon: <TreePine className="h-6 w-6" /> },
+  { id: 'machinery', name: 'Industrial Machinery', icon: <Cog className="h-6 w-6" /> },
+  { id: 'gifts', name: 'Gifts & Crafts', icon: <Gift className="h-6 w-6" /> },
+  { id: 'lighting', name: 'Lights & Lighting', icon: <Lightbulb className="h-6 w-6" /> },
+  { id: 'shoes', name: 'Shoes', icon: <ShoppingBag className="h-6 w-6" /> },
+  { id: 'jewelry', name: 'Jewelry & Eyewear', icon: <Eye className="h-6 w-6" /> },
+  { id: 'luggage', name: 'Luggages & Bags', icon: <ShoppingBag className="h-6 w-6" /> },
   { id: 'others', name: 'Others', icon: <MoreHorizontal className="h-6 w-6" /> },
 ];
 
